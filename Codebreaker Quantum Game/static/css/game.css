@@ -1,0 +1,42 @@
+/* Cyberpunk / Neon Terminal Aesthetics */
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600;700&display=swap');
+
+body {
+font-family: 'Fira Code', monospace;
+}
+
+.cyber-grid {
+background-image: radial-gradient(rgba(99, 102, 241, 0.15) 1px, transparent 1px);
+background-size: 24px 24px;
+}
+
+.neon-border-cyan {
+box-shadow: 0 0 20px rgba(6, 182, 212, 0.2);
+}
+
+.peg-slot {
+transition: all 0.2s ease-in-out;
+}
+
+.peg-slot:hover {
+transform: scale(1.08);
+}
+
+/* Custom Scrollbar for Breach Log */
+#attemptsHistory::-webkit-scrollbar {
+width: 6px;
+}
+
+#attemptsHistory::-webkit-scrollbar-track {
+background: rgba(15, 23, 42, 0.6);
+border-radius: 8px;
+}
+
+#attemptsHistory::-webkit-scrollbar-thumb {
+background: rgba(99, 102, 241, 0.4);
+border-radius: 8px;
+}
+
+#attemptsHistory::-webkit-scrollbar-thumb:hover {
+background: rgba(99, 102, 241, 0.7);
+}
