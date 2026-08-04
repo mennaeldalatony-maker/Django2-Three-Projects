@@ -1,0 +1,83 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus Workspace - Smart Workspace Solutions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans">
+    <nav class="bg-slate-900 text-white p-4 shadow-md">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-indigo-400">Nexus Workspace</h1>
+            <span class="text-sm text-gray-400">Book your workspace effortlessly</span>
+        </div>
+    </nav>
+
+    <section class="gradient-bg text-white py-16 px-4 text-center">
+        <h2 class="text-4xl font-extrabold mb-4">Workspaces Designed for Creativity & Productivity</h2>
+        <p class="text-lg text-gray-300 max-w-2xl mx-auto">Select the perfect room or desk for your needs and book directly online.</p>
+    </section>
+
+    <main class="max-w-6xl mx-auto p-6">
+        <div class="grid md:grid-cols-3 gap-6" id="workspaceGrid">
+            {% for space in workspaces %}
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 flex flex-col justify-between card-hover">
+                <div class="p-6">
+                    <span class="inline-block bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full font-semibold mb-2">
+                        {{ space.get_category_display }}
+                    </span>
+                    <h3 class="text-xl font-bold mb-2">{{ space.name }}</h3>
+                    <p class="text-gray-600 text-sm mb-4">{{ space.description }}</p>
+                    <div class="text-sm text-gray-500">Capacity: {{ space.capacity }} people</div>
+                </div>
+                <div class="p-6 bg-gray-50 border-t flex justify-between items-center">
+                    <span class="text-lg font-bold text-indigo-600">${{ space.price_per_hour }}/hr</span>
+                    <button onclick="openBookingModal('{{ space.id }}', '{{ space.name }}', '{{ space.price_per_hour }}')" 
+                            class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition">
+                        Book Now
+                    </button>
+                </div>
+            </div>
+            {% empty %}
+            <p class="text-center col-span-3 text-gray-500">No workspaces available right now.</p>
+            {% endfor %}
+        </div>
+    </main>
+
+    <div id="bookingModal" class="fixed inset-0 modal-backdrop hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 relative shadow-2xl">
+            <h3 class="text-xl font-bold mb-4" id="modalTitle">Confirm Booking</h3>
+            <form id="bookingForm" onsubmit="handleBookingSubmit(event)">
+                <input type="hidden" id="modalSpaceId">
+                <div class="mb-3">
+                    <label class="block text-sm font-medium mb-1">Full Name</label>
+                    <input type="text" id="custName" required class="w-full border rounded-lg p-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+                </div>
+                <div class="mb-3">
+                    <label class="block text-sm font-medium mb-1">Email Address</label>
+                    <input type="email" id="custEmail" required class="w-full border rounded-lg p-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+                </div>
+                <div class="grid grid-cols-2 gap-3 mb-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Date</label>
+                        <input type="date" id="bookDate" required class="w-full border rounded-lg p-2 text-sm outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Hours</label>
+                        <input type="number" id="bookHours" min="1" value="1" required class="w-full border rounded-lg p-2 text-sm outline-none">
+                    </div>
+                </div>
+                <div class="flex justify-end gap-2">
+                    <button type="button" onclick="closeModal()" class="px-4 py-2 text-gray-600 bg-gray-100 rounded-lg text-sm">Cancel</button>
+                    <button type="submit" class="px-4 py-2 text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg text-sm font-medium">Confirm Booking</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>
